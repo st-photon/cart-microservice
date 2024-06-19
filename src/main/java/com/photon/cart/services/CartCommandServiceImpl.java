@@ -40,12 +40,12 @@ public class CartCommandServiceImpl implements CartCommandService {
     public Response addToCart(AddCartItemRequest addCartItemRequest) {
         final ProductDTO product = this.productConsumer.getProductById(addCartItemRequest.getProductId());
         final UserDTO user = userConsumer.getUserById(addCartItemRequest.getUserId());
-        final Optional<Cart> cartOptional = cartRepositoryWrapper.findActiveCartByUserId(user.getId());
+        final Optional<Cart> cartOptional = cartRepositoryWrapper.findActiveCartByUserId(user.getUserId());
         if(cartOptional.isEmpty()) {
             Cart cart = new Cart();
             cart.setCheckedOut(false);
             cart.setDeleted(false);
-            cart.setUserId(user.getId());
+            cart.setUserId(user.getUserId());
             cart.getCartItems().add(createCartItem(product, addCartItemRequest.getQty()));
             final Cart newCart = this.cartRepository.saveAndFlush(cart);
             return Response.of(newCart.getId());
@@ -78,7 +78,7 @@ public class CartCommandServiceImpl implements CartCommandService {
     public void removeCartItem(int userId, UUID productId) {
         try {
             final UserDTO user = userConsumer.getUserById(userId);
-            final Optional<Cart> cartOptional = cartRepositoryWrapper.findActiveCartByUserId(user.getId());
+            final Optional<Cart> cartOptional = cartRepositoryWrapper.findActiveCartByUserId(user.getUserId());
             if(cartOptional.isEmpty()) {
                 throw new IllegalArgumentException("Active cart not available for this user");
             }
