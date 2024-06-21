@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -37,5 +39,10 @@ public class CartApiResource {
     @DeleteMapping(value = "/item", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteCartItem(@RequestBody DeleteCartItemRequest deleteCartItemRequest) {
         cartCommandService.removeCartItem(deleteCartItemRequest.getUserId(), deleteCartItemRequest.getProductId());
+    }
+
+    @PutMapping(value = "/orderFullFilled", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void ordered() {
+        System.out.println("Order Success from saga");
     }
 }
