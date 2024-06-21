@@ -1,6 +1,7 @@
 package com.photon.cart.entity;
 
 
+import com.photon.core.TxnStatus;
 import com.photon.infrastructure.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -37,4 +38,9 @@ public class Cart extends BaseEntity {
     @Column(name = "order_id")
     @JdbcType(VarcharJdbcType.class)
     private UUID orderId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "saga_txn_status", nullable = false)
+    @Basic(optional = false)
+    private TxnStatus txnStatus;
 }

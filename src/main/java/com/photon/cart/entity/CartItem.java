@@ -25,4 +25,5 @@ public class CartItem extends BaseEntity {
     @Column(name = "is_deleted", nullable = false)
     @Basic(optional = false)
     private boolean isDeleted;
+
 }
